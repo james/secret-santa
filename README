@@ -24,5 +24,9 @@ class Gift < ActiveRecord::Base
 end
 
 Copyright (c) 2008 James Darling, released under the MIT license
+Inspired by Douglas Crockford's Base32
+Uses a line from http://snippets.dzone.com/posts/show/2111
+
+URLs:
 http://github.com/james/secret-santa
 http://coupde.com
