@@ -1,13 +1,28 @@
 SecretSanta
 ===========
 
-Introduction goes here.
+Secret Santa provides an hash of unconfusable alphanumeric characters, and what confusable alphanumeric characters they can be confused to. Confused?
+It then provides a class with 2 main methods. The first created a random string with only unconfusable characters. The second for stripping strings of non-alphanumeric characters, and then converting the confusable characters with non-confusable characters. Now I'm confused. Let's show an example:
 
+SecretSanta.create_code #=> "OCYMRVLV"
+SecretSanta.normalize("0CYmRViV") #=> "OCYMRVLV"
+SecretSanta.normalize("0CYmRViV") == SecretSanta.normalize("oCyMRV1V") #=> true
 
-Example
-=======
+The basic idea is that you should be able to write your coupon codes on the back of a fag packet when drunk, and it should still work.
 
-Example goes here.
+It also extends Active Record with a single method, which simply creates a code, checks the almost impossible scenario that the code already exists, and then set the attribute you give it.
 
+class Gift < ActiveRecord::Base
+  before_create :set_code
+  def set_code
+    set_gift_code_for :gift_code
+  end
+  
+  def self.find_gift_by_user_given_code(code_given)
+    find_by_gift_code SecretSanta.normalize(code_given)
+  end
+end
 
-Copyright (c) 2008 [name of plugin creator], released under the MIT license
+Copyright (c) 2008 James Darling, released under the MIT license
+http://github.com/james/secret-santa
+http://coupde.com
